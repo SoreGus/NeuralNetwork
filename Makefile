@@ -1,11 +1,15 @@
-all: matrix.o
-	cc matrix.o main.c -o NeuralNetworkSample
+Program = NeuralNetworkSample
+MatrixSource = Matrix/matrix.c
+MatrixOperationsSource = Matrix/matrixOperations.c
+MainSource = main.c
 
-matrix.o: matrix.c
-	cc -c matrix.c
+all: $(Program)
+
+$(Program): $(MainSource) $(MatrixOperationsSource) $(MatrixSource)
+	cc $(MainSource) $(MatrixOperationsSource) $(MatrixSource) -o $(Program)
 
 clean:
-	rm -f *.o NeuralNetworkSample
+	rm -f *.o $(Program)
 
 run:
-	./NeuralNetworkSample
+	./$(Program)
