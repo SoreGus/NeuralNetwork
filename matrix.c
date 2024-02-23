@@ -1,4 +1,8 @@
 #include "matrix.h"
+#include<stdio.h>
+#include<stdlib.h>
+
+#define MAXCHAR 100
 
 Matrix* createMatrix(int rows, int columns) {
     Matrix *matrix;
@@ -63,4 +67,22 @@ void saveMatrix(Matrix *matrix, char* path) {
         }
     }
     fclose(file);
+}
+
+Matrix* loadMatrix(char* path) {
+    FILE *file = fopen(path, "r");
+    char entry[MAXCHAR];
+    fgets(entry, MAXCHAR, file);
+    int rows = atoi(entry);
+    fgets(entry, MAXCHAR, file);
+    int columns = atoi(entry);
+    Matrix *matrix = createMatrix(rows, columns);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            fgets(entry, MAXCHAR, file);
+            matrix->data[i][j] = strtod(entry, NULL);
+        }
+    }
+    fclose(file);
+    return matrix;
 }

@@ -1,6 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-
 typedef struct
 {
     double **data;
@@ -14,3 +11,4 @@ void fillMatrix(Matrix *matrix, double value);
 void freeMatrix(Matrix *matrix);
 Matrix* copyMatrix(Matrix *matrix);
 void saveMatrix(Matrix *matrix, char* path);
+Matrix* loadMatrix(char* path);
