@@ -1,13 +1,14 @@
 #include "matrix.h"
+#include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    Matrix *first = createMatrix(5,5);
-    fillMatrix(first, 1);
-    saveMatrix(first, "matrix");
-    freeMatrix(first);
-
-    Matrix *second = loadMatrix("matrix");
-    printMatrix(second);
-    freeMatrix(second);
+    Matrix *matrix = createMatrix(3,3);
+    randomizeMatrix(matrix, 2);
+    Matrix *flatten = flattenMatrix(matrix, 0);
+    int maxValueIndex = flattenMatrixMaxValueIndex(flatten);
+    printMatrix(matrix);
+    printMatrix(flatten);
+    printf("MaxIndex: %d", maxValueIndex);
+    freeMatrix(matrix);
     return 0;
 }
