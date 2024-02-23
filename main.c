@@ -10,5 +10,6 @@ int main(int argc, char *argv[]) {
     printMatrix(flatten);
     printf("MaxIndex: %d", maxValueIndex);
     freeMatrix(matrix);
+    freeMatrix(flatten);
     return 0;
 }
