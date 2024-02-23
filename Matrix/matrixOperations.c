@@ -30,7 +30,34 @@ Matrix* applyMatrixOperation(Matrix* firstMatrix, Matrix* secondMatrix, MatrixOp
             }
         }
     }
+    return newMatrix;
+}
 
+Matrix* scaleMatrix(Matrix* matrix, double value, MatrixOperation operation) {
+    Matrix *newMatrix = copyMatrix(matrix);
+    for (int i = 0; i < matrix->rows; i++) {
+        for (int j = 0; j < matrix->columns; j++) {
+            switch (operation)
+            {
+            case SUN: newMatrix->data[i][j] += value;
+                break;
+            case MULT: newMatrix->data[i][j] *= value;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    return newMatrix;
+}
+
+Matrix* transposeMatrix(Matrix* matrix) {
+    Matrix *newMatrix = createMatrix(matrix->columns, matrix->rows);
+    for (int i = 0; i < matrix->rows; i++) {
+        for (int j = 0; j < matrix->columns; j++) {
+            newMatrix->data[j][i] = newMatrix->data[i][j];
+        }
+    }
     return newMatrix;
 }
 
