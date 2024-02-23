@@ -1,6 +1,6 @@
 #include "matrix.h"
 
-Matrix* create(int rows, int columns) {
+Matrix* createMatrix(int rows, int columns) {
     Matrix *matrix;
     matrix = malloc(sizeof(Matrix));
     matrix->rows = rows;
@@ -14,7 +14,7 @@ Matrix* create(int rows, int columns) {
     return matrix;
 }
 
-void print(Matrix *matrix) {
+void printMatrix(Matrix *matrix) {
     printf("Matrix:\n\n");
     printf("Rows: %d\n", matrix->rows);
     printf("Columns: %d\n", matrix->columns);
@@ -26,10 +26,41 @@ void print(Matrix *matrix) {
     }
 }
 
-void fill(Matrix *matrix, double value) {
+void fillMatrix(Matrix *matrix, double value) {
     for (int i = 0; i < matrix->rows; i++) {
         for (int j = 0; j < matrix->columns; j++) {
             matrix->data[i][j] = value;
         }
     }
+}
+
+void freeMatrix(Matrix *matrix) {
+    for (int i = 0; i < matrix->columns; i++) {
+        free(matrix->data[i]);
+    }
+    free(matrix->data);
+    free(matrix);
+    matrix = NULL;
+}
+
+Matrix* copyMatrix(Matrix *matrix) {
+    Matrix *copy = createMatrix(matrix->rows, matrix->columns);
+    for (int i = 0; i < matrix->rows; i++) {
+        for (int j = 0; j < matrix->columns; j++) {
+            copy->data[i][j] = copy->data[i][j];
+        }
+    }
+    return copy;
+}
+
+void saveMatrix(Matrix *matrix, char* path) {
+    FILE *file = fopen(path, "w");
+    fprintf(file, "%d\n", matrix->rows);
+    fprintf(file, "%d\n", matrix->columns);
+    for (int i = 0; i < matrix->rows; i++) {
+        for (int j = 0; j < matrix->columns; j++) {
+            fprintf(file, "%.6f\n", matrix->data[i][j]);
+        }
+    }
+    fclose(file);
 }

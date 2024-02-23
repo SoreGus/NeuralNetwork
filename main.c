@@ -1,8 +1,14 @@
 #include "matrix.h"
 
 int main(int argc, char *argv[]) {
-    Matrix *m = create(10, 10);
-    fill(m, 2);
-    print(m);
+    Matrix *m = createMatrix(10, 10);
+    Matrix *m2 = copyMatrix(m);
+    fillMatrix(m, 0);
+    printMatrix(m2);
+    fillMatrix(m, 9);
+    printMatrix(m);;
+    printMatrix(m2);
+    freeMatrix(m);
+    freeMatrix(m2);
     return 0;
 }

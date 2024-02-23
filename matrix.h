@@ -8,6 +8,9 @@ typedef struct
     int columns;
 }Matrix;
 
-Matrix* create(int rows, int columns);
-void fill(Matrix *matrix, double value);
-void print(Matrix *matrix);
+Matrix* createMatrix(int rows, int columns);
+void printMatrix(Matrix *matrix);
+void fillMatrix(Matrix *matrix, double value);
+void freeMatrix(Matrix *matrix);
+Matrix* copyMatrix(Matrix *matrix);
+void saveMatrix(Matrix *matrix, char* path);
