@@ -7,10 +7,10 @@ double apply(double input) {
 
 int main(int argc, char *argv[]) {
 
-    Matrix *matrix = createMatrix(5, 5);
-    fillMatrix(matrix, 3);
+    Matrix *matrix = createMatrix(3, 2);
+    fillMatrix(matrix, 1);
     printMatrix(matrix);
-    matrix = applyFunctionOnMatrix(apply, matrix);
+    matrix = transposeMatrix(matrix);
     printMatrix(matrix);
     freeMatrix(matrix);
 

@@ -9,7 +9,7 @@ int checkMatrixMatch(Matrix* firstMatrix, Matrix* secondMatrix) {
 
 Matrix* applyMatrixOperation(Matrix* firstMatrix, Matrix* secondMatrix, MatrixOperation operation) {
     if (checkMatrixMatch(firstMatrix, secondMatrix) == 1) {
-        printf("Matrix not match");
+        printf("Matrix not match for operation");
         exit(EXIT_FAILURE);
     }
     Matrix *newMatrix = createMatrix(firstMatrix->rows, secondMatrix->columns);
@@ -69,5 +69,23 @@ Matrix* applyFunctionOnMatrix(double (*func)(double), Matrix* matrix) {
 		}
 	}
     return newMatrix;
+}
+
+Matrix *dotMatrix(Matrix* firstMatrix, Matrix* secondMatrix) {
+    if (firstMatrix->columns != secondMatrix->rows) {
+        printf("Matrix not match for dot");
+        exit(EXIT_FAILURE);
+    }
+    Matrix* matrix = createMatrix(firstMatrix->rows, secondMatrix->rows);
+    for (int i = 0; i < firstMatrix->rows; i++) {
+		for (int j = 0; j < secondMatrix->columns; j++) {
+			double value = 0;
+            for (int k = 0; k < secondMatrix->columns; k++) {
+                value += firstMatrix->data[i][k] * secondMatrix->data[k][j];
+            } 
+            matrix->data[i][j] = value;
+		}
+	}
+    return matrix;
 }
 
