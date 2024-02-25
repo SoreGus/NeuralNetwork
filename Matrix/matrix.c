@@ -54,7 +54,7 @@ Matrix* copyMatrix(Matrix *matrix) {
     Matrix *copy = createMatrix(matrix->rows, matrix->columns);
     for (int i = 0; i < matrix->rows; i++) {
         for (int j = 0; j < matrix->columns; j++) {
-            copy->data[i][j] = copy->data[i][j];
+            copy->data[i][j] = matrix->data[i][j];
         }
     }
     return copy;

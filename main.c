@@ -2,11 +2,13 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    
+
     Matrix *matrix = createMatrix(5, 5);
-    randomizeMatrix(matrix, 2);
+    fillMatrix(matrix, 3);
     printMatrix(matrix);
-    matrix = transposeMatrix(matrix);
+    matrix = scaleMatrix(matrix, 2, SUN);
+    printMatrix(matrix);
+    matrix = scaleMatrix(matrix, 2, MULT);
     printMatrix(matrix);
     freeMatrix(matrix);
 
