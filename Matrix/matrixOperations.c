@@ -55,7 +55,7 @@ Matrix* transposeMatrix(Matrix* matrix) {
     Matrix *newMatrix = createMatrix(matrix->columns, matrix->rows);
     for (int i = 0; i < matrix->rows; i++) {
         for (int j = 0; j < matrix->columns; j++) {
-            newMatrix->data[j][i] = newMatrix->data[i][j];
+            newMatrix->data[j][i] = matrix->data[i][j];
         }
     }
     return newMatrix;

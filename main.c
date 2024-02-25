@@ -2,27 +2,13 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    Matrix *first = createMatrix(3,3);
-    fillMatrix(first, 3);
-    printMatrix(first);
-
-    Matrix *second = createMatrix(3,3);
-    fillMatrix(second, 2);
-    printMatrix(second);
-
-    Matrix *sunResult = applyMatrixOperation(first, second, SUN);
-    Matrix *multResult = applyMatrixOperation(first, second, MULT);
-    Matrix *subResult = applyMatrixOperation(first, second, SUB);
-
-    printMatrix(sunResult);
-    printMatrix(multResult);
-    printMatrix(subResult);
-
-    freeMatrix(first);
-    freeMatrix(second);
-    freeMatrix(sunResult);
-    freeMatrix(multResult);
-    freeMatrix(subResult);
+    
+    Matrix *matrix = createMatrix(5, 5);
+    randomizeMatrix(matrix, 2);
+    printMatrix(matrix);
+    matrix = transposeMatrix(matrix);
+    printMatrix(matrix);
+    freeMatrix(matrix);
 
     return 0;
 }
