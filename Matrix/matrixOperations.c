@@ -61,3 +61,13 @@ Matrix* transposeMatrix(Matrix* matrix) {
     return newMatrix;
 }
 
+Matrix* applyFunctionOnMatrix(double (*func)(double), Matrix* matrix) {
+    Matrix* newMatrix = copyMatrix(matrix);
+    for (int i = 0; i < newMatrix->rows; i++) {
+		for (int j = 0; j < newMatrix->columns; j++) {
+			newMatrix->data[i][j] = (*func)(newMatrix->data[i][j]);
+		}
+	}
+    return newMatrix;
+}
+
