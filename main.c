@@ -1,18 +1,16 @@
 #include "Matrix/matrixOperations.h"
 #include <stdio.h>
-
-double apply(double input) {
-	return input * 3;
-}
+#include "Util/Image.h"
 
 int main(int argc, char *argv[]) {
 
-    Matrix *matrix = createMatrix(3, 2);
-    fillMatrix(matrix, 1);
-    printMatrix(matrix);
-    matrix = transposeMatrix(matrix);
-    printMatrix(matrix);
-    freeMatrix(matrix);
+    char buffer[100];
+    Image** images = readImagesFromFile("data/mnist_train.csv", 10000);
+    for (int i = 0; i < 10; i++) {
+        sprintf(buffer, "output%d.jpg", i);
+        saveJPEGImage(buffer, images[i]);
+    }
+    freeImages(images, 10000);
 
     return 0;
 }
