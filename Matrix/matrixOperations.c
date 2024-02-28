@@ -68,19 +68,20 @@ Matrix* applyFunctionOnMatrix(double (*func)(double), Matrix* matrix) {
 			newMatrix->data[i][j] = (*func)(newMatrix->data[i][j]);
 		}
 	}
+    func = NULL;
     return newMatrix;
 }
 
 Matrix* dot(Matrix* firstMatrix, Matrix* secondMatrix) {
     if (firstMatrix->columns != secondMatrix->rows) {
-        printf("Matrix not match for dot");
+        printf("Matrix not match for dot\n");
         exit(EXIT_FAILURE);
     }
-    Matrix* matrix = createMatrix(firstMatrix->rows, secondMatrix->rows);
+    Matrix* matrix = createMatrix(firstMatrix->rows, secondMatrix->columns);
     for (int i = 0; i < firstMatrix->rows; i++) {
 		for (int j = 0; j < secondMatrix->columns; j++) {
 			double value = 0;
-            for (int k = 0; k < secondMatrix->columns; k++) {
+            for (int k = 0; k < secondMatrix->rows; k++) {
                 value += firstMatrix->data[i][k] * secondMatrix->data[k][j];
             } 
             matrix->data[i][j] = value;

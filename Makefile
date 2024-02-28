@@ -22,10 +22,10 @@ MainObject = main.o
 all: $(MainObject) $(NeuralNetworkObject) $(ActivationsObject) $(ImageObject) $(MatrixOperationsObject) $(MatrixObject)
 	cc $^ -o $(Program)
 
-$(NeuralNetworkObject): $(NeuralNetworkSource) 
+$(MainObject): $(MainSource)
 	cc -c $^
 
-$(ImageObject): $(ImageSource)
+$(NeuralNetworkObject): $(NeuralNetworkSource) 
 	cc -c $^
 
 $(ImageObject): $(ImageSource)

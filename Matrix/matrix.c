@@ -5,7 +5,6 @@
 #include <time.h> 
 
 #define MAXCHAR 100
-int srandIsRead = 0;
 
 Matrix* createMatrix(int rows, int columns) {
     Matrix *matrix;
@@ -14,9 +13,7 @@ Matrix* createMatrix(int rows, int columns) {
     matrix->columns = columns;
     matrix->data = malloc(rows * sizeof(double*));
     for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            matrix->data[i] = malloc(columns * sizeof(double));
-        }
+        matrix->data[i] = malloc(columns * sizeof(double));
     }
     return matrix;
 }
@@ -42,7 +39,7 @@ void fillMatrix(Matrix *matrix, double value) {
 }
 
 void freeMatrix(Matrix *matrix) {
-    for (int i = 0; i < matrix->columns; i++) {
+    for (int i = 0; i < matrix->rows; i++) {
         free(matrix->data[i]);
     }
     free(matrix->data);
@@ -90,15 +87,7 @@ Matrix* loadMatrix(char* path) {
     return matrix;
 }
 
-void initSRandIfNedded() {
-    if (srandIsRead == 0) {
-        srand(time(NULL));
-        srandIsRead = 1;
-    }
-}
-
 double uniformDistribution(double low, double high) {
-    initSRandIfNedded();
     double difference = high - low;
     int scale = 10000;
     int scaledDifference = (int)(difference * scale);
@@ -106,8 +95,8 @@ double uniformDistribution(double low, double high) {
 }
 
 void randomizeMatrix(Matrix *matrix, int number) {
-    int min = -1.0 / sqrt(number);
-    int max = 1.0 / sqrt(number);
+    double min = -1.0 / sqrt(number);
+    double max = 1.0 / sqrt(number);
     for (int i = 0; i < matrix->rows; i++) {
         for (int j = 0; j < matrix->columns; j++) {
             matrix->data[i][j] = uniformDistribution(min, max);

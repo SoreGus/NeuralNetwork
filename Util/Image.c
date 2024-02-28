@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 Image* imageFromMatrix(Matrix* matrix, int label) {
-    Image* image = malloc(sizeof(Image*));
+    Image* image = malloc(sizeof(Image));
     image->data = matrix;
     image->label = label;
     return image;
@@ -21,7 +21,7 @@ Image** readImagesFromFile(char *path, int numberOfImages) {
     fgets(row, maxChar, file);
     int i = 0;
     while(feof(file) != 1 && i < numberOfImages) {
-        images[i] = malloc(sizeof(Image*));
+        images[i] = malloc(sizeof(Image));
         int j = 0;
         fgets(row, maxChar, file);
         char * token = strtok(row, ",");
