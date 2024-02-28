@@ -1,4 +1,6 @@
 #include "NeuralNetwork.h"
+#include "../Matrix/matrixOperations.h"
+#include "Activations.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/stat.h>
@@ -73,5 +75,37 @@ NeuralNetwork* loadNeuralNetwork(char* path) {
 	printf("Successfully loaded network from '%s'\n", path);
 	chdir("-");
 	return network;
+}
+
+Matrix* predict(NeuralNetwork* network, Matrix* input) {
+    Matrix* hiddenInputs = dotMatrix(network->hiddenWeights, input);
+    Matrix *hiddenOutputs = applyFunctionOnMatrix(sigmoid, hiddenInputs);
+    Matrix *finalInputs = dotMatrix(network->outputWeights, hiddenOutputs);
+    Matrix *finalOutputs = applyFunctionOnMatrix(sigmoid, finalInputs);
+    Matrix *result = softmax(finalOutputs);
+    freeMatrix(hiddenInputs);
+    freeMatrix(hiddenOutputs);
+    freeMatrix(finalInputs);
+    freeMatrix(finalOutputs);
+    return result;
+}
+
+Matrix* predictFromImage(NeuralNetwork* network, Image* image) {
+    Matrix* matrix = flattenMatrix(image->data, 0);
+    Matrix* result = predict(network, matrix);
+    freeMatrix(matrix);
+    return result;
+}
+
+double predictOnImages(NeuralNetwork* network, Image** images, int number) {
+    int corrects = 0;
+    for (int i = 0; i < number; i++) {
+        Matrix* prediction = predictFromImage(network, images[i]);
+        if (flattenMatrixMaxValueIndex(prediction) == images[i]->label) {
+            corrects++;
+        }
+        freeMatrix(prediction);
+    }
+    return 1.0 * corrects / number;
 }
 
