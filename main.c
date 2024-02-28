@@ -2,18 +2,15 @@
 #include <stdio.h>
 #include "Util/Image.h"
 #include "NeuralNetwork/Activations.h"
+#include "NeuralNetwork/NeuralNetwork.h"
 
 int main(int argc, char *argv[]) {
 
-    char buffer[100];
-    Image** images = readImagesFromFile("data/mnist_train.csv", 10);
-    Matrix *matrix = images[0]->data;
-    Matrix* sigmoidedMatrix = softmax(matrix);
-    Image* image = imageFromMatrix(sigmoidedMatrix, -1);
-    saveJPEGImage("test.jpg", image);
-    freeImages(images, 10);
-    freeImage(image);
+    NeuralNetwork* network = createNeuralNetwork(30, 10, 10, 0.1);
+    Matrix *matrix = network->hiddenWeights;
+    printMatrix(matrix);
     freeMatrix(matrix);
+    freeNeuralNetwork(network);
 
     return 0;
 }

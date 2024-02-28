@@ -12,14 +12,20 @@ ImageObject = Image.o
 ActivationsSource = NeuralNetwork/Activations.c
 ActivationsObject = Activations.o
 
+NeuralNetworkSource = NeuralNetwork/NeuralNetwork.c
+NeuralNetworkObject = NeuralNetwork.o
+
 MainSource = main.c
 MainObject = main.o
 
 
-all: $(MainObject) $(ActivationsObject) $(ImageObject) $(MatrixOperationsObject) $(MatrixObject)
+all: $(MainObject) $(NeuralNetworkObject) $(ActivationsObject) $(ImageObject) $(MatrixOperationsObject) $(MatrixObject)
 	cc $^ -o $(Program)
 
-$(MainObject): $(MainSource) 
+$(NeuralNetworkObject): $(NeuralNetworkSource) 
+	cc -c $^
+
+$(ImageObject): $(ImageSource)
 	cc -c $^
 
 $(ImageObject): $(ImageSource)
