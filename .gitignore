@@ -56,3 +56,6 @@ NeuralNetworkSample
 data/*
 NetworkData
 NetworkData/*
+
+testing_net
+testing_net/*
