@@ -9,6 +9,7 @@ int main(int argc, char *argv[]) {
     NeuralNetwork* network = createNeuralNetwork(30, 10, 10, 0.1);
     Matrix *matrix = network->hiddenWeights;
     printMatrix(matrix);
+    saveNeuralNetwork(network, "NetworkData");
     freeMatrix(matrix);
     freeNeuralNetwork(network);
 

@@ -54,3 +54,5 @@ dkms.conf
 main
 NeuralNetworkSample
 data/*
+NetworkData
+NetworkData/*
