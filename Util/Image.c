@@ -4,6 +4,13 @@
 #include <string.h>
 #include <stdint.h>
 
+Image* imageFromMatrix(Matrix* matrix, int label) {
+    Image* image = malloc(sizeof(Image*));
+    image->data = matrix;
+    image->label = label;
+    return image;
+}
+
 Image** readImagesFromFile(char *path, int numberOfImages) {
     FILE* file;
     Image** images = malloc(numberOfImages * sizeof(Image*));
