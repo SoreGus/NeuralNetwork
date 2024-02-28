@@ -20,4 +20,5 @@ NeuralNetwork* loadNeuralNetwork(char* path);
 Matrix* predict(NeuralNetwork* network, Matrix* input);
 Matrix* predictFromImage(NeuralNetwork* network, Image* image);
 double predictOnImages(NeuralNetwork* network, Image** images, int number);
-
+void train(NeuralNetwork* network, Matrix* input, Matrix* output);
+void trainWithImages(NeuralNetwork* network, Image** images, int batchSize);

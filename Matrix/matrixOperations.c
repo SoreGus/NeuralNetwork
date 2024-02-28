@@ -71,7 +71,7 @@ Matrix* applyFunctionOnMatrix(double (*func)(double), Matrix* matrix) {
     return newMatrix;
 }
 
-Matrix *dotMatrix(Matrix* firstMatrix, Matrix* secondMatrix) {
+Matrix* dot(Matrix* firstMatrix, Matrix* secondMatrix) {
     if (firstMatrix->columns != secondMatrix->rows) {
         printf("Matrix not match for dot");
         exit(EXIT_FAILURE);

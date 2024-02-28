@@ -78,9 +78,9 @@ NeuralNetwork* loadNeuralNetwork(char* path) {
 }
 
 Matrix* predict(NeuralNetwork* network, Matrix* input) {
-    Matrix* hiddenInputs = dotMatrix(network->hiddenWeights, input);
+    Matrix* hiddenInputs = dot(network->hiddenWeights, input);
     Matrix *hiddenOutputs = applyFunctionOnMatrix(sigmoid, hiddenInputs);
-    Matrix *finalInputs = dotMatrix(network->outputWeights, hiddenOutputs);
+    Matrix *finalInputs = dot(network->outputWeights, hiddenOutputs);
     Matrix *finalOutputs = applyFunctionOnMatrix(sigmoid, finalInputs);
     Matrix *result = softmax(finalOutputs);
     freeMatrix(hiddenInputs);
@@ -107,5 +107,67 @@ double predictOnImages(NeuralNetwork* network, Image** images, int number) {
         freeMatrix(prediction);
     }
     return 1.0 * corrects / number;
+}
+
+void train(NeuralNetwork* network, Matrix* input, Matrix* output) {
+    Matrix* hiddenInputs = dot(network->hiddenWeights, output);
+    Matrix* hiddenOutputs = applyFunctionOnMatrix(sigmoid, hiddenInputs);
+    Matrix* finalInputs = dot(network->outputWeights, hiddenOutputs);
+    Matrix* finalOutputs = applyFunctionOnMatrix(sigmoid, finalInputs);
+    
+    Matrix* outputErrors = applyMatrixOperation(output, finalInputs, SUB);
+    Matrix* transposedMatrix = transposeMatrix(network->outputWeights);
+    Matrix* hiddenErrors = dot(transposedMatrix, outputErrors);
+    freeMatrix(transposedMatrix);
+
+    Matrix* sigmoidPrimeMatrix = sigmoidPrime(finalInputs);
+    Matrix* multipliedMatrix = applyMatrixOperation(outputErrors, sigmoidPrimeMatrix, MULT);
+    transposedMatrix = transposeMatrix(hiddenOutputs);
+    Matrix* dotMatrix = dot(multipliedMatrix, transposedMatrix);
+	Matrix* scaledMatrix = scaleMatrix(dotMatrix, network->learningRate, MULT);
+	Matrix* addedMatrix = applyMatrixOperation(network->outputWeights, scaledMatrix, SUN);
+
+    freeMatrix(network->outputWeights);
+	network->outputWeights = addedMatrix;
+
+    freeMatrix(sigmoidPrimeMatrix);
+    freeMatrix(multipliedMatrix);
+    freeMatrix(transposedMatrix);
+    freeMatrix(dotMatrix);
+
+    sigmoidPrimeMatrix = sigmoidPrime(hiddenOutputs);
+    multipliedMatrix = applyMatrixOperation(hiddenErrors, sigmoidPrimeMatrix, MULT);
+    transposedMatrix = transposeMatrix(input);
+    dotMatrix = dot(network->hiddenWeights, transposedMatrix);
+    scaledMatrix = scaleMatrix(dotMatrix, network->learningRate, MULT);
+    addedMatrix = applyMatrixOperation(network->hiddenWeights, scaledMatrix, SUN);
+    freeMatrix(network->hiddenWeights);
+    network->hiddenWeights = addedMatrix;
+
+    freeMatrix(sigmoidPrimeMatrix);
+    freeMatrix(multipliedMatrix);
+    freeMatrix(transposedMatrix);
+    freeMatrix(dotMatrix);
+    freeMatrix(scaledMatrix);
+
+    freeMatrix(hiddenInputs);
+    freeMatrix(hiddenOutputs);
+    freeMatrix(finalInputs);
+    freeMatrix(finalOutputs);
+    freeMatrix(outputErrors);
+    freeMatrix(hiddenErrors);
+}
+
+void trainWithImages(NeuralNetwork* network, Image** images, int batchSize) {
+    for (int i = 0; i < batchSize; i++) {
+        if (i % 100 == 0) printf("Img No. %d\n", i);
+        Image* image = images[i];
+        Matrix* imageData = flattenMatrix(image->data, 0);
+        Matrix* output = createMatrix(10, 1);
+        output->data[image->label][0] = 1;
+        train(network, imageData, output);
+        freeMatrix(output);
+        freeMatrix(imageData);
+    }
 }
 
