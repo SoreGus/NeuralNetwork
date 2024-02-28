@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
     char buffer[100];
     Image** images = readImagesFromFile("data/mnist_train.csv", 10);
     Matrix *matrix = images[0]->data;
-    Matrix* sigmoidedMatrix = sigmoidPrime(matrix);
+    Matrix* sigmoidedMatrix = softmax(matrix);
     Image* image = imageFromMatrix(sigmoidedMatrix, -1);
     saveJPEGImage("test.jpg", image);
     freeImages(images, 10);

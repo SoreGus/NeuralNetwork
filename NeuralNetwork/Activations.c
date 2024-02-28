@@ -15,3 +15,19 @@ Matrix* sigmoidPrime(Matrix* matrix) {
     freeMatrix(subtracted);
     return multiplied;
 }
+
+Matrix* softmax(Matrix* matrix) {
+    double total;
+    for (int i = 0; i < matrix->rows; i++) {
+        for (int j = 0; j < matrix->columns; j++) {
+            total += exp(matrix->data[i][j]);
+        }
+    }
+    Matrix* newMatrix = createMatrix(matrix->rows, matrix->columns);
+    for (int i = 0; i < newMatrix->rows; i++) {
+        for (int j = 0; j < newMatrix->columns; j++) {
+            newMatrix->data[i][j] = exp(matrix->data[i][j]) / total;
+        }
+    }
+    return newMatrix;
+}
